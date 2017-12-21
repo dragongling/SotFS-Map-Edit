@@ -1,0 +1,368 @@
+<Window
+	x:Class="SotFSMapEdit.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:SotFSMapEdit"
+	Title="SotFS Map Enemy Editor"
+	Height="350"
+	Width="570"
+	ResizeMode="NoResize">
+	<FrameworkElement.Resources>
+		<ResourceDictionary>
+			<Style
+				TargetType="{x:Type ListViewItem}"
+				x:Key="{x:Type ListViewItem}">
+				<Style.Triggers>
+					<Trigger
+						Property="UIElement.IsKeyboardFocusWithin"
+						Value="True">
+						<Setter
+							Property="ListBoxItem.IsSelected"
+							Value="True" />
+					</Trigger>
+				</Style.Triggers>
+			</Style>
+		</ResourceDictionary>
+	</FrameworkElement.Resources>
+	<Grid>
+		<TabControl>
+			<TabItem
+				Header="Map Data">
+				<Grid>
+					<StackPanel
+						Margin="10,12,277,239">
+						<ComboBox
+							Name="MapName"
+							HorizontalAlignment="Left"
+							Width="186">
+							<ComboBoxItem
+								IsSelected="True"
+								Tag="m10_02_00_00.param"
+								Content="Things Betwixt" />
+							<ComboBoxItem
+								Tag="m10_04_00_00.param"
+								Content="Majula" />
+							<ComboBoxItem
+								Tag="m10_10_00_00.param"
+								Content="Forest of Fallen Giants" />
+							<ComboBoxItem
+								Tag="m10_14_00_00.param"
+								Content="Brightstone Cove" />
+							<ComboBoxItem
+								Tag="m10_15_00_00.param"
+								Content="Aldia's Keep" />
+							<ComboBoxItem
+								Tag="m10_16_00_00.param"
+								Content="Lost Bastille/Belfry Luna" />
+							<ComboBoxItem
+								Tag="m10_17_00_00.param"
+								Content="Harvest Valley/Earthen Peak" />
+							<ComboBoxItem
+								Tag="m10_18_00_00.param"
+								Content="No Man's Wharf" />
+							<ComboBoxItem
+								Tag="m10_19_00_00.param"
+								Content="Iron Keep/Belfry Sol" />
+							<ComboBoxItem
+								Tag="m10_23_00_00.param"
+								Content="Huntsman's Copse" />
+							<ComboBoxItem
+								Tag="m10_25_00_00.param"
+								Content="The Gutter/Black Gulch" />
+							<ComboBoxItem
+								Tag="m10_27_00_00.param"
+								Content="Dragon Aerie/Dragon Shrine" />
+							<ComboBoxItem
+								Tag="m10_29_00_00.param"
+								Content="Path to Shaded Woods" />
+							<ComboBoxItem
+								Tag="m10_30_00_00.param"
+								Content="Unseen Path to Heide" />
+							<ComboBoxItem
+								Tag="m10_31_00_00.param"
+								Content="Heide's Tower of Flame" />
+							<ComboBoxItem
+								Tag="m10_32_00_00.param"
+								Content="Shaded Woods" />
+							<ComboBoxItem
+								Tag="m10_33_00_00.param"
+								Content="Doors of Pharros" />
+							<ComboBoxItem
+								Tag="m10_34_00_00.param"
+								Content="Grave of Saints" />
+							<ComboBoxItem
+								Tag="m20_10_00_00.param"
+								Content="Giant Memories" />
+							<ComboBoxItem
+								Tag="m20_11_00_00.param"
+								Content="Shrine of Amana" />
+							<ComboBoxItem
+								Tag="m20_21_00_00.param"
+								Content="Drangleic Castle" />
+							<ComboBoxItem
+								Tag="m20_24_00_00.param"
+								Content="Undead Crypt" />
+							<ComboBoxItem
+								Tag="m20_26_00_00.param"
+								Content="Unknown" />
+							<ComboBoxItem
+								Tag="m40_03_00_00.param"
+								Content="Chasm of the Abyss" />
+							<ComboBoxItem
+								Tag="m50_35_00_00.param"
+								Content="Crown of the Sunken King" />
+							<ComboBoxItem
+								Tag="m50_36_00_00.param"
+								Content="Crown of the Iron King" />
+							<ComboBoxItem
+								Tag="m50_37_00_00.param"
+								Content="Crown of the Ivory King" />
+							<ComboBoxItem
+								Tag="m50_38_00_00.param"
+								Content="Undead Crypt Tomb" />
+						</ComboBox>
+					</StackPanel>
+					<Button
+						Margin="211,9,186,246"
+						Click="LoadMap">Load Map</Button>
+					<Button
+						Margin="10,52,186,211"
+						Click="Repack">Repack Modified Files to GameDataEbl.bdt</Button>
+				</Grid>
+			</TabItem>
+			<TabItem
+				Name="L1"
+				Header="Registered NPCs"
+				IsEnabled="False">
+				<Grid>
+					<Grid
+						ColumnSpan="3">
+						<ListView
+							Name="RegistList"
+							SelectionMode="Single"
+							Grid.ColumnSpan="2"
+							Margin="0,0,0,30"
+							SelectionChanged="RegistList_SelectionChanged">
+							<ListView.View>
+								<GridView>
+									<GridViewColumn
+										Header="Register ID"
+										Width="74">
+										<GridViewColumn.CellTemplate>
+											<DataTemplate>
+												<TextBlock
+													Background="#00FFFFFF"
+													Foreground="#FF00008B"
+													TextWrapping="Wrap"
+													Margin="0"
+													Text="{Binding REG_ID}" />
+											</DataTemplate>
+										</GridViewColumn.CellTemplate>
+									</GridViewColumn>
+									<GridViewColumn
+										Header="Spawn ID"
+										Width="73">
+										<GridViewColumn.CellTemplate>
+											<DataTemplate>
+												<TextBlock
+													Background="#00FFFFFF"
+													Foreground="#FF00008B"
+													TextWrapping="Wrap"
+													Margin="0"
+													Text="{Binding SPAWN_ID}" />
+											</DataTemplate>
+										</GridViewColumn.CellTemplate>
+									</GridViewColumn>
+									<GridViewColumn
+										Header="Spawn State"
+										Width="77">
+										<GridViewColumn.CellTemplate>
+											<DataTemplate>
+												<!--Неизвестный ID соединения: 6-->
+												<TextBox
+													Background="#00FFFFFF"
+													Foreground="#FF00008B"
+													BorderThickness="0"
+													TextWrapping="Wrap"
+													Margin="0"
+													Text="{Binding STATE}" />
+											</DataTemplate>
+										</GridViewColumn.CellTemplate>
+									</GridViewColumn>
+									<GridViewColumn
+										Header="Drawgroup"
+										Width="76">
+										<GridViewColumn.CellTemplate>
+											<DataTemplate>
+												<!--Неизвестный ID соединения: 7-->
+												<TextBox
+													Background="#00FFFFFF"
+													Foreground="#FF00008B"
+													BorderThickness="0"
+													TextWrapping="Wrap"
+													Margin="0"
+													Text="{Binding GROUP}" />
+											</DataTemplate>
+										</GridViewColumn.CellTemplate>
+									</GridViewColumn>
+								</GridView>
+							</ListView.View>
+						</ListView>
+					</Grid>
+					<TextBox
+						Name="newEnemyID"
+						Margin="6,257,375,4" />
+					<Button
+						Margin="188,257,190,4"
+						Click="RegisterNPC">-&gt; Register New Enemy</Button>
+					<Button
+						Margin="373,257,6,4"
+						Click="UnregisterNPC">Remove Selected</Button>
+				</Grid>
+			</TabItem>
+			<TabItem
+				Name="L2"
+				Header="NPC Spawns"
+				IsEnabled="False">
+				<Grid>
+					<Grid
+						ColumnSpan="3">
+						<ListView
+							Name="SpawnList"
+							SelectionMode="Single"
+							Grid.ColumnSpan="2"
+							Margin="0,0,0,30"
+							SelectionChanged="SpawnList_SelectionChanged">
+							<ListView.View>
+								<GridView>
+									<GridViewColumn
+										Header="ID"
+										Width="68">
+										<GridViewColumn.CellTemplate>
+											<DataTemplate>
+												<!--Неизвестный ID соединения: 13-->
+												<TextBox
+													Background="#00FFFFFF"
+													Foreground="#FF00008B"
+													BorderThickness="0"
+													TextWrapping="Wrap"
+													Margin="0"
+													Tag="{Binding INDEX}"
+													Text="{Binding ID}" />
+											</DataTemplate>
+										</GridViewColumn.CellTemplate>
+									</GridViewColumn>
+									<GridViewColumn
+										Header="Condition"
+										Width="75">
+										<GridViewColumn.CellTemplate>
+											<DataTemplate>
+												<!--Неизвестный ID соединения: 14-->
+												<TextBox
+													Background="#00FFFFFF"
+													Foreground="#FF00008B"
+													BorderThickness="0"
+													TextWrapping="Wrap"
+													Margin="0"
+													Tag="{Binding INDEX}"
+													Text="{Binding LV}" />
+											</DataTemplate>
+										</GridViewColumn.CellTemplate>
+									</GridViewColumn>
+									<GridViewColumn
+										Header="xPos"
+										Width="84">
+										<GridViewColumn.CellTemplate>
+											<DataTemplate>
+												<!--Неизвестный ID соединения: 15-->
+												<TextBox
+													Background="#00FFFFFF"
+													Foreground="#FF00008B"
+													BorderThickness="0"
+													TextWrapping="Wrap"
+													Margin="0"
+													Tag="{Binding INDEX}"
+													Text="{Binding X}" />
+											</DataTemplate>
+										</GridViewColumn.CellTemplate>
+									</GridViewColumn>
+									<GridViewColumn
+										Header="yPos"
+										Width="84">
+										<GridViewColumn.CellTemplate>
+											<DataTemplate>
+												<!--Неизвестный ID соединения: 16-->
+												<TextBox
+													Background="#00FFFFFF"
+													Foreground="#FF00008B"
+													BorderThickness="0"
+													TextWrapping="Wrap"
+													Margin="0"
+													Tag="{Binding INDEX}"
+													Text="{Binding Y}" />
+											</DataTemplate>
+										</GridViewColumn.CellTemplate>
+									</GridViewColumn>
+									<GridViewColumn
+										Header="zPos"
+										Width="84">
+										<GridViewColumn.CellTemplate>
+											<DataTemplate>
+												<!--Неизвестный ID соединения: 17-->
+												<TextBox
+													Background="#00FFFFFF"
+													Foreground="#FF00008B"
+													BorderThickness="0"
+													TextWrapping="Wrap"
+													Margin="0"
+													Tag="{Binding INDEX}"
+													Text="{Binding Z}" />
+											</DataTemplate>
+										</GridViewColumn.CellTemplate>
+									</GridViewColumn>
+									<GridViewColumn
+										Header="Facing"
+										Width="84">
+										<GridViewColumn.CellTemplate>
+											<DataTemplate>
+												<!--Неизвестный ID соединения: 18-->
+												<TextBox
+													Background="#00FFFFFF"
+													Foreground="#FF00008B"
+													BorderThickness="0"
+													TextWrapping="Wrap"
+													Margin="0"
+													Tag="{Binding INDEX}"
+													Text="{Binding F}" />
+											</DataTemplate>
+										</GridViewColumn.CellTemplate>
+									</GridViewColumn>
+									<GridViewColumn
+										Header="AI"
+										Width="40">
+										<GridViewColumn.CellTemplate>
+											<DataTemplate>
+												<!--Неизвестный ID соединения: 19-->
+												<TextBox
+													Background="#00FFFFFF"
+													Foreground="#FF00008B"
+													BorderThickness="0"
+													TextWrapping="Wrap"
+													Margin="0"
+													Tag="{Binding INDEX}"
+													Text="{Binding AI}" />
+											</DataTemplate>
+										</GridViewColumn.CellTemplate>
+									</GridViewColumn>
+								</GridView>
+							</ListView.View>
+						</ListView>
+					</Grid>
+					<Button
+						Margin="8,257,281,4"
+						Click="SpawnNPC">Duplicate Entry</Button>
+					<Button
+						Margin="282,257,8,4"
+						Click="DespawnNPC">Remove Selected</Button>
+				</Grid>
+			</TabItem>
+		</TabControl>
+	</Grid>
+</Window>
